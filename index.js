@@ -4,11 +4,11 @@ const http = require("http");
 const axios = require("axios");
 const Lame = require("node-lame").Lame;
 
-const { hideBin } = require('yargs/helpers');
-const yargs = require('yargs/yargs');
+const { hideBin } = require("yargs/helpers");
+const yargs = require("yargs/yargs");
 
 const argv = yargs(hideBin(process.argv))
-  .command('<config>', 'Configuration file path')
+  .command("<config>", "Configuration file path")
   .demandCommand(1)
   .parseSync();
 
@@ -27,7 +27,9 @@ server.listen(config.http.port, "0.0.0.0", () => {
 const mqtt = MQTT.connect(config.mqtt);
 
 mqtt.on("close", (...args) => console.log("close", ...args));
-mqtt.on("disconnect", (...args) => console.log("[MQTT]: Disconnected", ...args));
+mqtt.on("disconnect", (...args) =>
+  console.log("[MQTT]: Disconnected", ...args)
+);
 mqtt.on("error", (...args) => console.log("error", ...args));
 mqtt.on("connect", async function () {
   console.log("[MQTT]: Connected to broker");
@@ -59,8 +61,8 @@ mqtt.on("connect", async function () {
             <s:Body>
                 <u:SetAVTransportURI xmlns:u="urn:schemas-upnp-org:service:AVTransport:1">
                     <InstanceID>0</InstanceID>
-        					  <CurrentURIMetaData></CurrentURIMetaData>
-        					  <CurrentURI>http://${config.http.host}:${config.http.port}/${filename}.mp3</CurrentURI>
+                    <CurrentURIMetaData></CurrentURIMetaData>
+                    <CurrentURI>http://${config.http.host}:${config.http.port}/${filename}.mp3</CurrentURI>
                 </u:SetAVTransportURI>
             </s:Body>
         </s:Envelope>`,
@@ -81,6 +83,6 @@ mqtt.on("connect", async function () {
   });
 });
 
-process.on('SIGINT', function() {
+process.on("SIGINT", function () {
   process.exit();
 });
